@@ -2,7 +2,7 @@
 class SueldoData {
 	public static $tablename = "sueldo";
 
-	public function SueldoData(){
+	public function __construct(){
 		$this->fecha_pago = "";
 	}
 
