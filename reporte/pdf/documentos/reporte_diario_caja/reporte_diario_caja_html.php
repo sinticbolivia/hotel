@@ -106,7 +106,7 @@ tr:hover td { background: #d0dafd; color: #339; }
         <tr>
 
             <?php $cajas = CajaData::getAllAbierto(); 
-                if(count($cajas)>0){ $id_caja=$cajas->id;
+                if(is_object($cajas)>0){ $id_caja=$cajas->id;
                 }else{$id_caja=0;} ?>
 
    

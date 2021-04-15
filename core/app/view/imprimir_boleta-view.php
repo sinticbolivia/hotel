@@ -52,7 +52,7 @@
                               
                                 <?php 
                         $configuracion = ConfiguracionData::getAllConfiguracion(); 
-                        if(count($configuracion)>0){ 
+                        if( is_object($configuracion)>0){ 
                           $nombre=$configuracion->nombre;
                           $direccion=$configuracion->direccion;
                           $estado=$configuracion->estado;

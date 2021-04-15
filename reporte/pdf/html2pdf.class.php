@@ -5051,9 +5051,9 @@ if (!defined('__CLASS_HTML2PDF__')) {
 
                 // get the positions of the end of the table
                 $x = HTML2PDF::$_tables[$param['num']]['curr_x'] + HTML2PDF::$_tables[$param['num']]['width'];
-                if (count(HTML2PDF::$_tables[$param['num']]['height'])>1)
+                if( is_array(HTML2PDF::$_tables[$param['num']]['height']) && count(HTML2PDF::$_tables[$param['num']]['height']) >1 )
                     $y = $this->_margeTop+HTML2PDF::$_tables[$param['num']]['height'][count(HTML2PDF::$_tables[$param['num']]['height'])-1];
-                else if (count(HTML2PDF::$_tables[$param['num']]['height'])==1)
+				else if ( is_array(HTML2PDF::$_tables[$param['num']]['height']) && count(HTML2PDF::$_tables[$param['num']]['height'])==1)
                     $y = HTML2PDF::$_tables[$param['num']]['curr_y']+HTML2PDF::$_tables[$param['num']]['height'][count(HTML2PDF::$_tables[$param['num']]['height'])-1];
                 else
                     $y = HTML2PDF::$_tables[$param['num']]['curr_y'];
@@ -5443,21 +5443,21 @@ if (!defined('__CLASS_HTML2PDF__')) {
             } else {
                 // new position in the table
                 HTML2PDF::$_tables[$param['num']]['td_curr']++;
-                HTML2PDF::$_tables[$param['num']]['td_x']+= HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['dw'];
+                HTML2PDF::$_tables[$param['num']]['td_x'] += @HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['dw'];
 
                 // borders and background of the TD
                 $this->_drawRectangle(
                     HTML2PDF::$_tables[$param['num']]['td_x'],
                     HTML2PDF::$_tables[$param['num']]['td_y'],
-                    HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['w'],
-                    HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['h'],
+                    @HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['w'],
+                    @HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['h'],
                     $this->parsingCss->value['border'],
                     $this->parsingCss->value['padding'],
                     HTML2PDF::$_tables[$param['num']]['cellspacing']*0.5,
                     $this->parsingCss->value['background']
                 );
 
-                $this->parsingCss->value['width'] = HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['w'] - $marge['l'] - $marge['r'];
+                $this->parsingCss->value['width'] = @HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['w'] - $marge['l'] - $marge['r'];
 
                 // marges = size of the TD
                 $mL = HTML2PDF::$_tables[$param['num']]['td_x']+$marge['l'];
@@ -5465,8 +5465,8 @@ if (!defined('__CLASS_HTML2PDF__')) {
                 $this->_saveMargin($mL, 0, $mR);
 
                 // position of the content, from vertical-align
-                $hCorr = HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['h'];
-                $hReel = HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['real_h'];
+                $hCorr = @HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['h'];
+                $hReel = @HTML2PDF::$_tables[$param['num']]['cases'][$y][$x]['real_h'];
                 switch($this->parsingCss->value['vertical-align'])
                 {
                     case 'bottom':
@@ -5546,7 +5546,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
             } else {
                 $this->_loadMargin();
 
-                HTML2PDF::$_tables[$param['num']]['td_x']+= HTML2PDF::$_tables[$param['num']]['cases'][HTML2PDF::$_tables[$param['num']]['tr_curr']-1][HTML2PDF::$_tables[$param['num']]['td_curr']-1]['w'];
+                HTML2PDF::$_tables[$param['num']]['td_x'] += @HTML2PDF::$_tables[$param['num']]['cases'][HTML2PDF::$_tables[$param['num']]['tr_curr']-1][HTML2PDF::$_tables[$param['num']]['td_curr']-1]['w'];
             }
 
             $this->parsingCss->load();
