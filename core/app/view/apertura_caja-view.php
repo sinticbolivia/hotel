@@ -1,25 +1,14 @@
-
-
 <?php 
-     date_default_timezone_set('America/Lima');
-     $hoy = date("Y-m-d");
-
-    $u=null;
-    $u = UserData::getById(Session::getUID());
-    $usuario = $u->is_admin;
-    $id_usuario = $u->id;
-
-   $hora = date("H:i:s");
-  $fecha_completo = date("Y-m-d H:i:s");   
-             
-  ?>
-
-
-
-
-
+date_default_timezone_set('America/Lima');
+$hoy = date("Y-m-d");
+$u=null;
+$u = UserData::getById(Session::getUID());
+$usuario = $u->is_admin;
+$id_usuario = $u->id;
+$hora = date("H:i:s");
+$fecha_completo = date("Y-m-d H:i:s");   
+?>
 <section class="tile tile-simple col-md-4 col-md-offset-4">
-      
             <div class="tile-widget dvd dvd-btm" style="text-align: center;">
               <h3 class="box-title">APERTURA INICIAL DE CAJA</h3>
               <!-- /.box-tools -->
@@ -72,7 +61,7 @@
 
 </section>
 <script>
-  $("#addcaja").submit(function(e){
+  jQuery("#addcaja").submit(function(e){
     caja = $("#caja_abierta").val();
      
     if(caja=="1"){
@@ -81,15 +70,9 @@
     }
   });
 </script>
-
-
-
-
 <?php $cajas = CajaData::getAllAbierto(); ?>
-
 <!-- tile -->
                             <section class="tile  col-md-12">
-
                                 <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
                                     <h1 class="custom-font"><strong>CAJAS ABIERTAS EN FECHAS DE  </strong>HOY</h1>

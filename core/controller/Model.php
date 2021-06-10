@@ -1,6 +1,4 @@
 <?php
-
-
 // 10 de Octubre del 2014
 // Model.php
 // @brief agrego la clase Model para reducir las lineas de los modelos
@@ -41,11 +39,15 @@ class Model {
 		return $array;
 	}
 	//////////////////////////////////
-	public static function one($query,$aclass){
+	public static function one($query, $aclass)
+	{
+		if( !$query )
+			return null;
 		$cnt = 0;
 		$found = null;
 		$data = new $aclass;
-		while($r = $query->fetch_array()){
+		while($r = $query->fetch_array())
+		{
 			$cnt=1;
 			foreach ($r as $key => $v) {
 				if($cnt>0 && $cnt%2==0){ 
@@ -61,7 +63,3 @@ class Model {
 	}
 
 }
-
-
-
-?>

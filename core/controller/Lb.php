@@ -13,7 +13,4 @@ class Lb {
 		include "core/app/autoload.php";
 		include "core/app/init.php";
 	}
-
 }
-
-?>

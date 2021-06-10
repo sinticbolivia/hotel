@@ -1,9 +1,10 @@
 <?php
-class ClienteData {
-	public static $tablename = "cliente";
+class ClienteData 
+{
+	public static $tablename = 'persona'; //"cliente";
 
-
-	public function ClienteData(){
+	public function __construct()
+	{
 		$this->nombres = ""; 
 		$this->apellidos = "";
 		$this->direccion = "";
@@ -13,8 +14,9 @@ class ClienteData {
 		$this->password = ""; 
 	} 
 
-	public function add(){
-		$sql = "insert into cliente (nombres,apellidos,direccion,email,telefono,usuario,password) ";
+	public function add()
+	{
+		$sql = "insert into ". self::$tablename . " (nombres,apellidos,direccion,email,telefono,usuario,password) ";
 		$sql .= "value (\"$this->nombres\",\"$this->apellidos\",\"$this->direccion\",\"$this->email\",\"$this->telefono\",\"$this->usuario\",\"$this->password\")";
 		return Executor::doit($sql);
 	}
@@ -34,10 +36,11 @@ class ClienteData {
 		Executor::doit($sql);
 	}
 
-	public static function getById($id){
-		$sql = "select * from ".self::$tablename." where id=$id";
+	public static function getById($id)
+	{
+		$sql = "select * from ".self::$tablename." where id = $id";
 		$query = Executor::doit($sql);
-		return Model::one($query[0],new ClienteData());
+		return Model::one($query[0], new ClienteData());
 
 	}
 

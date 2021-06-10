@@ -3,13 +3,17 @@ class Database
 {
 	public static $db;
 	public static $con;
+	public	$user;
+	public	$pass;
+	public	$host;
+	public	$ddbb;
 	
 	function __construct()
 	{
-		$this->user="devudb";
-		$this->pass="[devudb]";
-		$this->host="localhost";
-		$this->ddbb="hotel";
+		$this->user = "devudb";
+		$this->pass = "[devudb]";
+		$this->host = "localhost";
+		$this->ddbb = "hotel";
 	} 
 
 

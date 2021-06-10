@@ -804,7 +804,8 @@ $(function() {
 		},
 
 
-    setSidebar: function() {
+    setSidebar: function() 
+	{
 
       width = $window.width();
 
@@ -832,14 +833,7 @@ $(function() {
 
     }
 
-	};
-
-
-
-
-
-
-
+};
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // initialize when document load
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

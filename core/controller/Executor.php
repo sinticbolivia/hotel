@@ -1,5 +1,4 @@
 <?php
-
 class Executor {
 
 	public static function doit($sql){

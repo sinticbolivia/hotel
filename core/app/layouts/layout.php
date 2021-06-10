@@ -1,111 +1,67 @@
+<?php 
+if( !isset($_GET['view']) )
+	$_GET['view'] = 'reserva';
+$res = Database::getCon()->query('select * from configuracion LIMIT 1');
+$cfg = $res->fetch_object(ConfiguracionData::class);
+//print_r($cfg);
+?>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
-
-    
 <head>
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>SISTEMA HOTEL </title>
-        <link rel="icon" type="image/ico" href="assets/images/favicon.ico" />
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
- 
-     <!-- ============================================
-        ================= Stylesheets ===================
-        ============================================= -->
-        <!-- vendor css files -->
-        <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/vendor/animate.css">
-        <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
-        <link rel="stylesheet" href="assets/js/vendor/animsition/css/animsition.min.css">
-        <link rel="stylesheet" href="assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
-        <link rel="stylesheet" href="assets/js/vendor/daterangepicker/daterangepicker-bs3.css">
-        <link rel="stylesheet" href="assets/js/vendor/owl-carousel/owl.carousel.css">
-        <link rel="stylesheet" href="assets/js/vendor/owl-carousel/owl.theme.css"> 
-        <link rel="stylesheet" href="assets/js/vendor/chosen/chosen.css">
-        <link rel="stylesheet" href="assets/js/vendor/summernote/summernote.css">
-        <link rel="stylesheet" href="assets/css/vendor/weather-icons.min.css">
-
-        <!-- project main css files -->
-        <link rel="stylesheet" href="assets/css/main.css">
-        <!--/ stylesheets -->
-
-
-
-        <!-- ==========================================
-        ================= Modernizr ===================
-        =========================================== -->
-        <script src="assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <!--/ modernizr -->
-
-
-
-
-
-    </head>
-
-
-
-
-
-    <body  id="minovate" class="<?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?> appWrapper sidebar-sm-forced <?php else:?>appWrapper<?php endif; ?>"  >
-
-
-
-
-
-
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>SISTEMA HOTEL </title>
+	<link rel="icon" type="image/ico" href="assets/images/favicon.ico" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- ============================================
+    ================= Stylesheets ===================
+    ============================================= -->
+	<!-- vendor css files -->
+	<link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/vendor/animate.css">
+	<link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/js/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" href="assets/js/vendor/datetimepicker/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="assets/js/vendor/daterangepicker/daterangepicker-bs3.css">
+	<link rel="stylesheet" href="assets/js/vendor/owl-carousel/owl.carousel.css">
+	<link rel="stylesheet" href="assets/js/vendor/owl-carousel/owl.theme.css"> 
+	<link rel="stylesheet" href="assets/js/vendor/chosen/chosen.css">
+	<link rel="stylesheet" href="assets/js/vendor/summernote/summernote.css">
+	<link rel="stylesheet" href="assets/css/vendor/weather-icons.min.css">
+	<!-- project main css files -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!--/ stylesheets -->
+	<script src="assets/js/vendor/modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+	<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
+	
+	<?php /* if(isset($_GET['view'])){ ?>
+	<?php if($_GET['view']!='reserva' && $_GET['view']!='proceso' and $_GET['view']!='proceso_venta' and $_GET['view']!='reporte_fecha_circular'){ ?>
+	<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
+	<?php }; ?>
+	<?php }else if(!isset($_SESSION["user_id"])) { ?>
+	<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
+	<?php } */?>
+</head>
+<body id="minovate" class="<?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?> appWrapper <?php else:?>appWrapper<?php endif; ?> layout">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- ====================================================
-        ================= Application Content ===================
-        ===================================================== -->
         <div id="wrap" class="animsition">
-
-
-
-
-
-
-            <!-- ===============================================
-            ================= HEADER Content ===================
-            ================================================ -->
-
             <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
             <section id="header">
                 <header class="clearfix">
-
                     <!-- Branding -->
                     <div class="branding">
                         <a class="brand" href="./">
-                            <span><strong>HOTEL</strong></span>
+                            <span><strong><?php print $cfg && $cfg->nombre ? $cfg->nombre : 'HOTEL' ?></strong></span>
                         </a>
                         <a href="#" class="offcanvas-toggle visible-xs-inline"><i class="fa fa-bars"></i></a>
                     </div>
                     <!-- Branding end -->
-
-
-
                     <!-- Left-side navigation -->
                     <ul class="nav-left pull-left list-unstyled list-inline">
                         <li class="sidebar-collapse divided-right">
@@ -116,8 +72,6 @@
                         
                     </ul>
                     <!-- Left-side navigation end -->
- 
- 
                     <!-- Search -->
                     <div class="search" id="main-search">
                         <form action="index.php?view=cliente" method="get">
@@ -126,22 +80,15 @@
                         </form>
                     </div>
                     <!-- Search end -->
-
-
-
-
                     <!-- Right-side navigation -->
                     <ul class="nav-right pull-right list-inline">
-                        
                         <li class="dropdown nav-profile">
-
                             <a href class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="assets/images/profile-photo.jpg" alt="" class="img-circle size-30x30">
                                 <span><?php if(isset($_SESSION["user_id"]) ){ echo UserData::getById($_SESSION["user_id"])->name; 
 
                   }?><i class="fa fa-angle-down"></i></span>
                             </a>
-
                             <ul class="dropdown-menu animated littleFadeInRight" role="menu">
                                 <!--
                                 <li>
@@ -168,35 +115,19 @@
                         </li>
                     </ul>
                     <!-- Right-side navigation end -->
-
-
-
                 </header>
 
             </section>
             <!--/ HEADER Content  -->
-
-
-
-
-
             <!-- =================================================
             ================= CONTROLS Content ===================
             ================================================== -->
             <div id="controls">
-
-
-
-
-
                 <!-- ================================================
                 ================= SIDEBAR Content ===================
                 ================================================= -->
                 <aside id="sidebar">
-
-
                     <div id="sidebar-wrap">
-
                         <div class="panel-group slim-scroll" role="tablist">
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab">
@@ -262,7 +193,6 @@
                                                 <li><a href="./?view=reporte_gasto"> <i class="fa fa-caret-right"></i>  Reportes por fechas</a></li>
                                               </ul>
                                             </li>
-
                                             <!--
                                           
                                             <li class="<?php if($_GET['view']=='sueldo'){ echo 'active';} ?>">
@@ -273,9 +203,6 @@
                                                 </ul>
                                             </li> 
                                         -->
-
-                                           
-                                         
                                             <?php if($u->is_admin):?>
 
                                             <li class="<?php if($_GET['view']=='habitacion' or $_GET['view']=='categoria' or $_GET['view']=='tarifa'){ echo 'active';} ?>">
@@ -342,47 +269,29 @@
 
                                         </ul>
                                         <!--/ NAVIGATION Content -->
-                                        
-                                        
                                     </div>
                                 </div>
                             </div>
-                            
-                           
                         </div>
-
                     </div>
-
-
                 </aside>
                 <!--/ SIDEBAR Content -->
-
-
             </div>
             <!--/ CONTROLS Content -->
 
 <?php endif;?>
-
-
             <!-- ====================================================
             ================= CONTENT ===============================
             ===================================================== -->
-
-
             
               <?php if(isset($_SESSION["user_id"]) || isset($_SESSION["client_id"])):?>
                 <section id="content">
                 <div class="page page-sidebar-xs-layout">
-
                     <?php View::load("reserva");?>
-
                 </div>
                 </section>
               <?php else:?>
-
-                
 <style type="text/css">
-
     html,body {
         height: 100%;
         background: #fff;
@@ -439,11 +348,7 @@
 
 
                                 </div>
-                                <!-- /tile header -->
- 
-                                <!-- tile body -->
                                 <div class="tile-body">
-
                                     <form role="form" action="./?action=processlogin" method="post"> 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Usuario</label>
@@ -458,96 +363,38 @@
                                             Mantener abierto
                                         </label>
                                         <div class="form-group">
-                                                <button type="submit" style="background-color: #2fcc71;color: white;" class="btn btn-rounded btn-primary btn form-control">Ingresar</button>
-                                            
+                                        	<button type="submit" class="btn btn-rounded btn-primary btn btn-block">Ingresar</button>
                                         </div>
                                     </form>
- 
                                 </div>
-                                <!-- /tile body -->
-
                             </section>
-                            <!-- /tile -->
-
                         </div>
-                        <!-- /col -->
-
-
       <?php endif;?>
-
-            
             <!--/ CONTENT -->
-
-
-
-
-
-
         </div>
         <!--/ Application Content -->
-
- 
- 
         <!-- ============================================
         ============== Vendor JavaScripts ===============
         ============================================= -->
-       <?php if(isset($_GET['view'])){ ?>
-        <?php if($_GET['view']!='reserva' and $_GET['view']!='proceso' and $_GET['view']!='proceso_venta' and $_GET['view']!='reporte_fecha_circular'){ ?>
-        <script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
-        <?php }; ?>
-        <?php }else if(!isset($_SESSION["user_id"])) { ?>
-<script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
-
-        <?php }?>
-
-        
- 
         <script src="assets/js/vendor/bootstrap/bootstrap.min.js"></script>
-
         <script src="assets/js/vendor/jRespond/jRespond.min.js"></script> 
-
         <script src="assets/js/vendor/sparkline/jquery.sparkline.min.js"></script>
-
         <script src="assets/js/vendor/slimscroll/jquery.slimscroll.min.js"></script>
-
         <script src="assets/js/vendor/animsition/js/jquery.animsition.min.js"></script>
-
         <script src="assets/js/vendor/screenfull/screenfull.min.js"></script>
-
         <script src="assets/js/vendor/owl-carousel/owl.carousel.min.js"></script>
-
         <script src="assets/js/vendor/daterangepicker/moment.min.js"></script>
-
         <script src="assets/js/vendor/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-
-       
         <script src="assets/js/vendor/chosen/chosen.jquery.min.js"></script>
-       
-
         <script src="assets/js/vendor/summernote/summernote.min.js"></script>
-
         <script src="assets/js/vendor/coolclock/coolclock.js"></script>
         <script src="assets/js/vendor/coolclock/excanvas.js"></script>
         <script src="assets/js/vendor/footable/footable.all.min.js"></script>
         <!--/ vendor javascripts -->
-
-
-
-
         <!-- ============================================
         ============== Custom JavaScripts ===============
         ============================================= -->
         <script src="assets/js/main.js"></script>
         <!--/ custom javascripts -->
-
-
-
-
-
-
-       
-
     </body>
-
-
 </html>

@@ -1,5 +1,5 @@
-
 <?php
+$dbObj = new Database();
 
 $dbhost = 'localhost';
 $dbuser = 'root';
@@ -8,10 +8,11 @@ $dbname = 'hotel_web_3.0';
 $tables = '*';
   
 //Call the core function
-backup_tables($dbhost, $dbuser, $dbpass, $dbname, $tables);
+backup_tables($dbObj->host, $dbObj->user, $dbObj->pass, $dbObj->ddbb, $tables);
 
 //Core function
-function backup_tables($host, $user, $pass, $dbname, $tables = '*') {
+function backup_tables($host, $user, $pass, $dbname, $tables = '*') 
+{
     $link = mysqli_connect($host,$user,$pass, $dbname);
 
     // Check connection
@@ -81,11 +82,9 @@ function backup_tables($host, $user, $pass, $dbname, $tables = '*') {
         }
         $return.="\n\n\n";
     }
-
     //save file
     $fileName = 'backup/db-backup-'.date('Y-m-d').'.sql';
-
-?>
+	?>
     <section class="content-header">
       <h1>
         
@@ -133,7 +132,8 @@ function backup_tables($host, $user, $pass, $dbname, $tables = '*') {
 
     </section>
     <!-- /.content -->
-<?php 
-$handle = fopen($fileName,'w+');
- fwrite($handle,$return);
+	<?php 
+	$handle = fopen($fileName,'w+');
+	fwrite($handle,$return);
+	fclose($handle);
 } ?>

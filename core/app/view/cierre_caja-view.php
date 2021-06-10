@@ -1,22 +1,15 @@
-
 <link rel="stylesheet" href="assets/js/vendor/footable/css/footable.core.min.css">
-
 <?php 
-     date_default_timezone_set('America/Lima');
-     $hoy = date("Y-m-d");
-
-             $u=null;
-                $u = UserData::getById(Session::getUID());
-                $usuario = $u->is_admin;
-                $id_usuario = $u->id;
-
-   $hora = date("H:i:s");
-  $fecha_completo = date("Y-m-d H:i:s");   
-             
-  ?>
-
- 
-<?php $caja_abierta = CajaData::getCierreCaja(); ?>
+date_default_timezone_set('America/Lima');
+$hoy = date("Y-m-d");
+$u=null;
+$u = UserData::getById(Session::getUID());
+$usuario = $u->is_admin;
+$id_usuario = $u->id;
+$hora = date("H:i:s");
+$fecha_completo = date("Y-m-d H:i:s");   
+$caja_abierta = CajaData::getCierreCaja(); 
+?>
 <section class="tile tile-simple col-md-4 col-md-offset-4">
             <?php if(($caja_abierta)){?>
             <div class="tile-widget dvd dvd-btm" style="text-align: center;">
@@ -243,36 +236,31 @@
                         <!-- /col -->
                     </div>
                     <!-- /row -->
-
-
-
-
+		<!-- 
         <script src="assets/js/vendor/bootstrap/bootstrap.min.js"></script>
         <script src="assets/js/vendor/jRespond/jRespond.min.js"></script>
         <script src="assets/js/vendor/sparkline/jquery.sparkline.min.js"></script>
         <script src="assets/js/vendor/slimscroll/jquery.slimscroll.min.js"></script>
         <script src="assets/js/vendor/animsition/js/jquery.animsition.min.js"></script>
         <script src="assets/js/vendor/screenfull/screenfull.min.js"></script>
+        
         <script src="assets/js/vendor/footable/footable.all.min.js"></script>
         <script src="assets/js/main.js"></script>
-         <script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
- <script>
-            $(window).load(function(){
-
-                $('.footable').footable();
-
-            });
-</script>  
-
-
+        <script src="assets/js/vendor/jquery/jquery-1.11.2.min.js"></script>
+        -->
 <script src="plugins/select2/select2.full.min.js"></script>
-
-
 <script>
-  $(function () {
+$(window).load(function()
+{
+	$('.footable').footable();
+});
+</script>  
+<script>
+jQuery(function () {
     //Initialize Select2 Elements
-    $(".select2").select2();
-
-
-  });
+    if( jQuery.select2 )
+    	$(".select2").select2();
+    else
+    	console.log('ERROR, jQUERY SELECT2 PLUGIN NOT FOUND');
+});
 </script>

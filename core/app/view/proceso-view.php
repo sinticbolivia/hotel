@@ -1,4 +1,3 @@
-  
 <?php 
 date_default_timezone_set('America/Lima');
      $hoy = date("Y-m-d"); 
@@ -23,48 +22,14 @@ $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
 <link rel="stylesheet" href="js/jquery-ui.css">
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/jquery-ui.js"></script> 
-  
-<script type="text/javascript">
-$(function() {
-            $("#documento").autocomplete({
-                source: "./?action=buscar_persona",
-                minLength: 2,
-                select: function(event, ui) {
-          event.preventDefault();
-          $('#documento').val(ui.item.documento); 
-          $('#nombre').val(ui.item.nombre);
-          $('#direccion').val(ui.item.direccion);
-          $('#id').val(ui.item.id);
-           }
-            });
-    }); 
-</script>
-
-<script type="text/javascript">
-$(function() {
-            $("#nombre").autocomplete({
-                source: "./?action=buscar_persona_nombre",
-                minLength: 2,
-                select: function(event, ui) {
-          event.preventDefault();
-          $('#documento').val(ui.item.documento); 
-          $('#nombre').val(ui.item.nombre);
-          $('#direccion').val(ui.item.direccion);
-          $('#id').val(ui.item.id);
-           }
-            });
-    }); 
-</script>
-
-<body id="minovate" class="appWrapper sidebar-sm-forced">
 <div class="row">
-<section class="content-header">
-    <ol class="breadcrumb">
-      <li><a href="index.php?view=reserva"><i class="fa fa-home"></i> Inicio</a></li>
-      <li class="active"><a href="index.php?view=recepcion">recepción</a></li>
-      <li class="active">Procesar</li>
-    </ol>
-</section> 
+	<section class="content-header">
+	    <ol class="breadcrumb">
+	      <li><a href="index.php?view=reserva"><i class="fa fa-home"></i> Inicio</a></li>
+	      <li class="active"><a href="index.php?view=recepcion">recepción</a></li>
+	      <li class="active">Procesar</li>
+	    </ol>
+	</section> 
 </div> 
 
  <!-- row --> 
@@ -382,9 +347,13 @@ $(function() {
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-addon">
-                     Fecha salida&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     Fecha salida
                   </div>
                   <input type="text" class="form-control" name="fecha_salida" id="fecha_salida" value="<?php echo $nuevafecha; ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                </div>
+             </div>
+             <div class="form-group">
+                <div class="input-group">
                   <div class="input-group-addon">
                     Hora salida
                   </div>
@@ -392,15 +361,11 @@ $(function() {
                 </div>
                 <!-- /.input group -->
               </div>
-
-              
-             
-                 <div class="box-footer">
+			<div class="box-footer">
                 <a href="index.php?view=recepcion" class="btn btn-danger">Cancelar</a>
                 <input type="hidden" name="id_habitacion" value="<?php echo $habitacion->id; ?>">
                 <button type="submit" class="btn btn-success pull-right">Registrar ingreso</button>
-              </div>
-             
+			</div>
 </td>
                     
                   </tr>
@@ -436,25 +401,34 @@ $(function() {
 
 </div>
 </div>
-    
-
-
-
-  <script>
-  $( function() {
+<script>
+  jQuery( function() {
+  	$("#documento").autocomplete({
+                source: "./?action=buscar_persona",
+                minLength: 2,
+                select: function(event, ui) {
+          event.preventDefault();
+          $('#documento').val(ui.item.documento); 
+          $('#nombre').val(ui.item.nombre);
+          $('#direccion').val(ui.item.direccion);
+          $('#id').val(ui.item.id);
+           }
+	});
+	$("#nombre").autocomplete({
+                source: "./?action=buscar_persona_nombre",
+                minLength: 2,
+                select: function(event, ui) {
+          event.preventDefault();
+          $('#documento').val(ui.item.documento); 
+          $('#nombre').val(ui.item.nombre);
+          $('#direccion').val(ui.item.direccion);
+          $('#id').val(ui.item.id);
+           }
+	});
     $( "#fechamin" ).datepicker();
-  } );
-  </script>
-  <script>
-  $( function() {
     $( "#fechamax" ).datepicker();
-  } );
-  </script>
-</head>
-<body>
- 
-
-
+  });
+</script>
 <script>
 sumaFecha = function(d, fecha)
 {
@@ -473,26 +447,17 @@ sumaFecha = function(d, fecha)
   var fechaFinal = anno+sep+mes+sep+dia;
   return (fechaFinal);
 }
-
-
-
-
-function sumar() {
-
+function sumar() 
+{
   m1 = document.getElementById("precio").value;
   m2 = document.getElementById("cant_noche").value;
   r = m1*m2;
-
   //alert(total);
   document.getElementById('spTotal').innerHTML = r;
-
   var fechamin = $("#fecha1").val()
   var fechaSumada = sumaFecha(m2,fechamin); /* Le sumas un dia */
   document.getElementById('fecha_salida').value = fechaSumada;
-
 }
-
-
 function CargarTarifa(val)
 {
     $('#mostrar_precio').html("Por favor espera un momento");    
@@ -505,7 +470,6 @@ function CargarTarifa(val)
         }
     });
 };
-
 function CargarMediopago(val)
 {
     $('#mostrar_mediopago').html("Por favor espera un momento");    
@@ -518,7 +482,6 @@ function CargarMediopago(val)
         }
     });
 };
-
 function MostrarDocumento(val)
 {
     $('#mostrar_documento').html("Por favor espera un momento");    
@@ -544,16 +507,7 @@ function MostrarSelectMedioPago(val)
         }
     });
 };
-
-
-  
-    
-      
-    
-  
-
-    
-  </script>
+</script>
 
 
 

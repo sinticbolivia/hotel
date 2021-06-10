@@ -489,10 +489,11 @@ CREATE TABLE `tipo_documento` (
 
 INSERT INTO `tipo_documento` (`id`, `nombre`, `fecha_creada`) VALUES
 (1, 'PASAPORTE', '2018-02-15 08:23:24'),
-(2, 'INE', '2018-02-15 09:24:24');
+(2, 'INE', '2018-02-15 09:24:24'),
+(3, 'DNI', '2018-02-15 09:24:24'),
+(4, 'CI', '2018-02-15 09:24:24');
 
 -- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `tipo_pago`
 --
@@ -513,7 +514,6 @@ INSERT INTO `tipo_pago` (`id`, `nombre`, `fecha_creada`) VALUES
 (3, 'DEPOSITO', '2018-08-22 00:00:00');
 
 -- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `tmp`
 --

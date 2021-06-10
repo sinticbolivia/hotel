@@ -1,16 +1,24 @@
 <?php
-class ConfiguracionData {
+class ConfiguracionData 
+{
 	public static $tablename = "configuracion";
-
+	public	$nombre;
+	public	$direccion;
+	public	$estado;
+	public	$telefono;
+	public	$fax;
+	public	$rnc;
+	
 	public function __construct()
 	{
+		/*
 		$this->nombre = "";
 		$this->direccion = "";
 		$this->estado = "";
 		$this->telefono = "";
 		$this->fax = "";
 		$this->rnc = "";
-	
+		*/
 	}
 
 	

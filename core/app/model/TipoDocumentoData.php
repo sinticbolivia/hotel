@@ -1,10 +1,10 @@
 <?php
-class TipoDocumentoData {
+class TipoDocumentoData 
+{
 	public static $tablename = "tipo_documento";
 
-
-
-	public function __construct(){
+	public function __construct()
+	{
 		$this->nombre = "";
 		$this->fecha_creada = "NOW()";
 	}
@@ -29,31 +29,21 @@ class TipoDocumentoData {
 		$sql = "update ".self::$tablename." set nombre=\"$this->nombre\" where id=$this->id";
 		Executor::doit($sql);
 	}
-
-	
-
 	public static function getById($id){
 		$sql = "select * from ".self::$tablename." where id=$id";
 		$query = Executor::doit($sql);
 		return Model::one($query[0],new TipoDocumentoData());
 
 	}
-
 	public static function getAll(){
 		$sql = "select * from ".self::$tablename;
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new TipoDocumentoData());
 	}
-
-
 	public static function getLike($q){
 		$sql = "select * from ".self::$tablename." where nombre like '%$q%'";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new TipoDocumentoData());
 
 	}
-
-
 }
-
-?>

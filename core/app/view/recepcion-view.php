@@ -1,17 +1,16 @@
 <link rel="stylesheet" href="assets/js/vendor/footable/css/footable.core.min.css">
-
+<?php /*?>
 <body id="minovate" class="appWrapper sidebar-sm-forced">
+*/ ?>
 <div class="row">
-<section class="content-header">
-    <ol class="breadcrumb">
-      <li><a href="index.php?view=reserva"><i class="fa fa-home"></i> Inicio</a></li>
-      <li class="active"><a href="#">recepción</a></li>
-    </ol>
-</section> 
+	<section class="content-header">
+	    <ol class="breadcrumb">
+	      <li><a href="index.php?view=reserva"><i class="fa fa-home"></i> Inicio</a></li>
+	      <li class="active"><a href="#">recepción</a></li>
+	    </ol>
+	</section> 
 </div> 
-
- 
- <!-- row --> 
+<!-- row --> 
 <div class="row"> 
   <!-- col -->
   <div class="col-md-12">
@@ -37,7 +36,7 @@
       <div class="tile-body">
           <div class="row">
             <?php if(isset($_GET['buscar']) and $_GET['buscar']!=""){ ?>
-                  <?php $cliente=PersonaData::getLike($_GET['buscar']); ?>
+                  <?php $cliente = PersonaData::getLike($_GET['buscar']); ?>
                   <?php $procesos = ProcesoData::getProcesoCliente($cliente->id);
                   if(count($procesos)>0){ ?> 
                    <?php foreach($procesos as $proceso):?>
@@ -62,37 +61,26 @@
                      </section>
                     </div>
                      <?php endforeach; ?>
-            
-
-               <?php }else{ echo"<h4 class='alert alert-success'>No se encontró Huesped en ninguna habitación</h4>";};
-                ?>
-
+               <?php }else{ echo"<h4 class='alert alert-success'>No se encontró Huesped en ninguna habitación</h4>";} ?>
             <?php }else{ ?>
-            <?php $habitaciones = HabitacionData::getAll();
-                          if(count($habitaciones)>0){ 
-                            // si hay usuarios 
-                            ?>
-                   <?php foreach($habitaciones as $habitacion):?>
-                
+            <?php 
+            $habitaciones = HabitacionData::getAll();
+            if(count($habitaciones)>0){ 
+				// si hay usuarios 
+			?>
+			<?php foreach($habitaciones as $habitacion):?>
                     <div class="col-lg-2 col-xs-6">
                       <!-- small box -->
                       <?php if($habitacion->estado==1){?>
                       <section class="tile bg-greensea widget-appointments">
-                      
-                      <?php } else if($habitacion->estado==2){?>
+                      <?php } else if($habitacion->estado==2){ ?>
                       <?php $proceso = ProcesoData::getByRecepcion($habitacion->id);?>
                       <section class="tile bg-danger widget-appointments">
-                      
-                      <?php } else if($habitacion->estado==3){?>
+                      <?php } else if($habitacion->estado==3){ ?>
                       <section class="tile bg-info widget-appointments">
-                     
                       <?php  } else if($habitacion->estado==4){?>
                       <section class="tile bg-warning widget-appointments">
-                     
-                      <?php  }; ?>
- 
-                             
-
+                      <?php } ?>
                             <?php if($habitacion->estado==1){?>
                                <!-- tile header -->
                                 <div class="tile-header dvd dvd-btm">
@@ -121,8 +109,11 @@
                                 </div> 
                                 <!-- /tile body -->
                             <?php } else if($habitacion->estado==2){?>
-
-                               <!-- tile header -->
+                            <?php
+                            $query = "select * from proceso where id_habitacion = {$habitacion->id} LIMIT 1";
+                            $res = Database::getCon()->query($query);
+                            $room_data = $res->fetch_object();
+                            ?>
                                 <div class="tile-header dvd dvd-btm">
                                     <h1 class="custom-font" style="font-size: 12px;">Ocupado: <?php echo $habitacion->nombre; ?><br></h1>
                                     <ul class="controls"> 
@@ -131,16 +122,14 @@
                                       </li>
                                     </ul>
                                 </div>  
-                                <!-- /tile header -->
-
                                 <!-- tile body -->
                                 <div class="tile-body" style="padding: 1px;">
                                    <h4 style="text-align: center; font-size: 12px;"><?php echo substr($proceso->getCliente()->nombre, 0,20); ?></h4>
+                                   <div class="room-counter text-center" 
+                                   	data-dfrom="<?php print strtotime($room_data->fecha_entrada) ?>" 
+                                   	data-dto="<?php print strtotime($room_data->fecha_salida) ?>"></div>
                                 </div>
                                 <!-- /tile body -->
-
-
-
                                 <div class="modal fade bs-example-modal-xm" id="myModalCheckOut<?php echo $habitacion->id; ?>" role="dialog" aria-labelledby="myModalLabel">
                                         <div class="modal-dialog modal-info">
                                           <div class="modal-dialog">
@@ -307,33 +296,58 @@
         </div>
         <!-- /.modal -->
       </div>
-
-
-
-
-
-
-
-
-
-
-                    <?php endforeach; ?>
-            
-
-               <?php }else{ 
-            echo"<h4 class='alert alert-success'>Necesita agregar habitaciones en CONFIGURACIÓN</h4>";
-
-                };
-                ?>
-
-                <?php }; ?>
-          </div>
-
-        </div>
-      </div>
-    
+      	<?php endforeach; ?>
+      	<?php }else{ 
+		echo"<h4 class='alert alert-success'>Necesita agregar habitaciones en CONFIGURACIÓN</h4>";
+		} ?>
+		<?php } ?>
+		</div>
+	</div>
+</div>
 </section>
 </div>
 </div>
-
+<script>
+(function()
+{
+	function setCountDown(el)
+	{
+		//let end = new Date('12/17/2021 08:21 AM');
+		let end 	= new Date( parseInt(el.dataset.dto) * 1000 );
+		let _second = 1000;
+		let _minute = _second * 60;
+		let _hour 	= _minute * 60;
+		let _day 	= _hour * 24;
+		let timer;
+		
+		function showRemaining() 
+		{
+			var now = new Date();
+			var distance = end - now;
+			if (distance < 0) {
+		
+				clearInterval(timer);
+				el.innerHTML = 'EXPIRED!';
+		
+				return;
+			}
+			var days = Math.floor(distance / _day);
+			var hours = Math.floor((distance % _day) / _hour);
+			var minutes = Math.floor((distance % _hour) / _minute);
+			var seconds = Math.floor((distance % _minute) / _second);
+		
+			el.innerHTML = days + ':';
+			el.innerHTML += hours + ':';
+			el.innerHTML += minutes + ' : ';
+			//document.getElementById('countdown').innerHTML += seconds + ' segundos';
+			el.innerHTML += seconds + ' ';
+		}
+		timer = setInterval(showRemaining, 1000);
+	}
+	document.querySelectorAll('.room-counter').forEach(function(el)
+	{
+		setCountDown(el);
+	});
+})();
+</script>
 

@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="assets/js/vendor/footable/css/footable.core.min.css">
 <body id="minovate" class="appWrapper sidebar-sm-forced">
 <div class="row">
@@ -9,8 +8,7 @@
     </ol>
 </section> 
 </div> 
-
- <!-- row --> 
+<!-- row --> 
 <div class="row">
   <!-- col -->
   <div class="col-md-12">
@@ -357,11 +355,8 @@
                 <h4 class="modal-title"><span class="fa fa-users"></span> INGRESAR NUEVO CLIENTE</h4>
               </div>
               <div class="modal-body" style="background-color:#fff !important;">
-                
                 <div class="row">
                 <div class="col-md-offset-1 col-md-10">
-  
-                  
                   <div class="form-group">
                     <div class="input-group">
                       <span class="input-group-addon"> Tipo de documento </span>
@@ -373,7 +368,6 @@
                       </select>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <div class="input-group">
                       <span class="input-group-addon"> Documento </span>
@@ -412,7 +406,7 @@
                   <div class="form-group">
                     <div class="input-group">
                       <span class="input-group-addon"> Fecha nac </span>
-                       <input type="date" name="fecha_nac" class="form-control" value="<?php echo $hoy; ?>" >
+                       <input type="date" name="fecha_nac" class="form-control" value="<?php echo isset($hoy) ? $hoy : ''; ?>" >
                     </div>
                   </div>
 
@@ -420,11 +414,10 @@
                   
                 </div>
                 </div>
-
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-outline">Agregar Datos</button>
+                <button type="button" class="btn btn-danger btn-outline pull-left" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-outline btn-primary">Agregar Datos</button>
               </div>
             </form>
             </div>

@@ -1,10 +1,5 @@
 <?php
-/**
-* @author Nelson
-**/
-
 define("ROOT", dirname(__FILE__));
-
 $debug = false;
 if($debug)
 {

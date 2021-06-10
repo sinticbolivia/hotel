@@ -1,9 +1,8 @@
 <?php
-
-if(isset($_SESSION["user_id"]) && $_SESSION["user_id"]!=""){
-		print "<script>window.location='index.php?view=home';</script>";
+if(isset($_SESSION["user_id"]) && $_SESSION["user_id"]!="")
+{
+	print "<script>window.location='index.php?view=home';</script>";
 }
-
 ?>
 <br><br><br><br><br>
 <div class="content">
